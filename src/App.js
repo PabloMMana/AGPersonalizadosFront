@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard'; // Você criará este componente depois
 
 function App() {
+  // Função para verificar se o usuário está autenticado
+  const isAuthenticated = () => {
+    // Retorna true se houver um token, caso contrário, retorna false.
+    const token = localStorage.getItem('userToken');
+    return !!token; // !! converte o valor para booleano (true ou false)
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/esqueci-senha" element={<h1>Esqueci a Senha</h1>} />
+        <Route path="/novo-usuario" element={<h1>Novo Usuário</h1>} />
+
+        {/* Rotas protegidas (só acessíveis se o usuário estiver logado) */}
+        <Route
+          path="/dashboard"
+          element={isAuthenticated() ? <Dashboard /> : <Navigate to="/login" replace />}
+        />
+
+        {/* Redireciona a raiz para o login */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </Router>
   );
 }
 
