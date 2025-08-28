@@ -1,25 +1,34 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap'; // Importe este componente
 
 const SideNav = () => {
   return (
     <Nav className="flex-column bg-light vh-100 p-3">
-      <Nav.Item>
-        <Nav.Link as={LinkContainer} to="/dashboard/clientes">Clientes</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link as={LinkContainer} to="/dashboard/estoque">Estoque</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link as={LinkContainer} to="/dashboard/pedidos">Pedidos</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link as={LinkContainer} to="/dashboard/produtos">Produtos</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link as={LinkContainer} to="/dashboard/vendas">Vendas</Nav.Link>
-      </Nav.Item>
+      {/* Exemplo corrigido para Clientes */}
+      <LinkContainer to="/dashboard/clientes">
+        <Nav.Link>Clientes</Nav.Link>
+      </LinkContainer>
+
+      {/* Exemplo corrigido para Estoque */}
+      <LinkContainer to="/dashboard/estoque">
+        <Nav.Link>Estoque</Nav.Link>
+      </LinkContainer>
+
+      {/* Exemplo corrigido para Pedidos */}
+      <LinkContainer to="/dashboard/pedidos">
+        <Nav.Link>Pedidos</Nav.Link>
+      </LinkContainer>
+
+      {/* Exemplo corrigido para Produtos */}
+      <LinkContainer to="/dashboard/produtos">
+        <Nav.Link>Produtos</Nav.Link>
+      </LinkContainer>
+
+      {/* Exemplo corrigido para Vendas */}
+      <LinkContainer to="/dashboard/vendas">
+        <Nav.Link>Vendas</Nav.Link>
+      </LinkContainer>
     </Nav>
   );
 };
