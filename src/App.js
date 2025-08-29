@@ -5,6 +5,8 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard'; // Você criará este componente depois
 import Clientes from './pages/Clientes';
 
+
+
 function App() {
   // Função para verificar se o usuário está autenticado
   const isAuthenticated = () => {
@@ -18,14 +20,14 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/esqueci-senha" element={<h1>Esqueci a Senha</h1>} />
-        <Route path="/novo-usuario" element={<h1>Novo Usuário</h1>} />        
+        <Route path="/novo-usuario" element={<h1>Novo Usuário</h1>} /> 
+        
 
         {/* Rotas protegidas (só acessíveis se o usuário estiver logado) */}
-        <Route
-          path="/dashboard"
-          element={isAuthenticated() ? <Dashboard /> : <Navigate to="/login" replace />}
-          
-        />
+        <Route path="/dashboard" element={<Dashboard />}>
+          {/* Rotas aninhadas que serão renderizadas dentro do <Outlet /> do Dashboard */}
+          <Route path="clientes" element={<Clientes />} />                 
+        </Route>
 
         {/* Redireciona a raiz para o login */}
         <Route path="/" element={<Navigate to="/login" replace />} />

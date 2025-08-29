@@ -37,7 +37,8 @@ const Clientes = () => {
           <tr>
             <th>Nome</th>
             <th>Email</th>
-            <th>Ações</th>
+            <th>Endereço</th>
+            <th>Telefone</th>
           </tr>
         </thead>
         <tbody>
@@ -45,6 +46,9 @@ const Clientes = () => {
             <tr key={cliente.id}>
               <td>{cliente.nome}</td>
               <td>{cliente.email}</td>
+              <td>{cliente.endereco}</td>
+              <td>{cliente.telefone}</td>
+              
               <td>
                 <Button variant="info" className="me-2">Editar</Button>
                 <Button variant="danger" onClick={() => handleDelete(cliente.id)}>Excluir</Button>

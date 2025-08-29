@@ -12,7 +12,7 @@ const Dashboard = () => {
         </Col>
         <Col md={10}>
           <div className="mt-4">
-            {/* Aqui os componentes de CRUD serão exibidos */}
+            {/* Aqui os componentes de CRUD serão exibidos */}           
             <Outlet /> 
           </div>
         </Col>
