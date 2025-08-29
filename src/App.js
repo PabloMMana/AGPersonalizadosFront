@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard'; // Você criará este componente depois
+import Clientes from './pages/Clientes';
 
 function App() {
   // Função para verificar se o usuário está autenticado
@@ -17,12 +18,13 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/esqueci-senha" element={<h1>Esqueci a Senha</h1>} />
-        <Route path="/novo-usuario" element={<h1>Novo Usuário</h1>} />
+        <Route path="/novo-usuario" element={<h1>Novo Usuário</h1>} />        
 
         {/* Rotas protegidas (só acessíveis se o usuário estiver logado) */}
         <Route
           path="/dashboard"
           element={isAuthenticated() ? <Dashboard /> : <Navigate to="/login" replace />}
+          
         />
 
         {/* Redireciona a raiz para o login */}
