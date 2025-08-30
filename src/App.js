@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard'; // Você criará este componente depois
 import Clientes from './pages/Clientes';
+import Pedidos from './pages/Pedidos';
 
 
 
@@ -26,7 +27,8 @@ function App() {
         {/* Rotas protegidas (só acessíveis se o usuário estiver logado) */}
         <Route path="/dashboard" element={<Dashboard />}>
           {/* Rotas aninhadas que serão renderizadas dentro do <Outlet /> do Dashboard */}
-          <Route path="clientes" element={<Clientes />} />                 
+          <Route path="clientes" element={<Clientes />} />  
+          <Route path="pedidos" element={<Pedidos />} />               
         </Route>
 
         {/* Redireciona a raiz para o login */}
