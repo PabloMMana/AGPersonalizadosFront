@@ -13,6 +13,20 @@
   }
 }
 
+.background-login {
+  background-image: url('./assets/images/logo2.jpg');
+  background-size: cover; /* Faz a imagem cobrir toda a tela */
+  background-position: center; /* Centraliza a imagem */
+  background-repeat: no-repeat; /* Evita que a imagem se repita */
+  height: 100vh; /* Ocupa 100% da altura da viewport */
+  width: 100vw; /* Ocupa 100% da largura da viewport */
+  opacity: 0.2; /* Define a transparência (50%) */
+  position: fixed; /* Fixa a imagem no fundo */
+  top: 0;
+  left: 0;
+  z-index: -1; /* Coloca a imagem atrás de todo o conteúdo */
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

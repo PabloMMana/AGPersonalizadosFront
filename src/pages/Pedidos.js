@@ -12,7 +12,7 @@ const Pedidos = () => {
 
   const fetchPedidos = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/pedido'); // URL da sua API de pedido
+      const response = await axios.get('http://localhost:5000/api/Pedido'); // URL da sua API de pedido
       setPedidos(response.data);
     } catch (error) {
       console.error('Erro ao buscar pedidos:', error);
@@ -21,7 +21,7 @@ const Pedidos = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/pedido/${id}`);
+      await axios.delete(`http://localhost:5000/api/Pedido/${id}`);
       fetchPedidos(); // Atualiza a lista após a exclusão
     } catch (error) {
       console.error('Erro ao excluir pedido:', error);
@@ -44,10 +44,10 @@ const Pedidos = () => {
         <tbody>
           {pedidos.map(pedido => (
             <tr key={pedido.id}>
-              <td>{pedido.datapedido}</td>
-              <td>{pedido.NomeProduto}</td>
-              <td>{pedido.Detalhes}</td>
-              <td>{pedido.Quamtidade}</td>
+              <td>{pedido.dataPedido}</td>
+              <td>{pedido.nomeProduto}</td>
+              <td>{pedido.detalhes}</td>
+              <td>{pedido.quantidade}</td>
               
               <td>
                 <Button variant="info" className="me-2">Editar</Button>
