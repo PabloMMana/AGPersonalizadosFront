@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../App.css'; 
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -28,6 +29,7 @@ const Login = () => {
 
   return (
     <Container fluid className="vh-100 d-flex align-items-center justify-content-center">
+      <div className="background-login"></div>
       <Row className="justify-content-center w-100">
         <Col xs={12} sm={10} md={8} lg={6}>
           <Card className="shadow-lg p-3">
