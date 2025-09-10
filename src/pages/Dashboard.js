@@ -6,14 +6,15 @@ import SideNav from '../components/SideNav'; // Crie este componente
 const Dashboard = () => {
   return (
     <Container fluid>
+      <div className="background-login"></div>
       <Row>
-        <Col md={2} className="p-0">
+        <Col md={1} className="p-30">
           <SideNav />
         </Col>
         <Col md={10}>
           <div className="mt-4">
             {/* Aqui os componentes de CRUD serão exibidos */}          
-             <a><h1>AG Persolalizados</h1></a>
+             
             <Outlet /> 
           </div>
         </Col>

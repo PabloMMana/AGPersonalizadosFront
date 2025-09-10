@@ -31,11 +31,11 @@ const Login = () => {
     <Container fluid className="vh-100 d-flex align-items-center justify-content-center">
       <div className="background-login"></div>
       <Row className="justify-content-center w-100">
-        <Col xs={12} sm={10} md={8} lg={6}>
+        <Col xs={3} sm={3} md={2} lg={3}>
           <Card className="shadow-lg p-3">
             <Card.Body>
               <Card.Title className="text-center">
-                <h2>Login</h2>
+                <h2>Login - AG Personalizados</h2>
               </Card.Title>
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -61,7 +61,7 @@ const Login = () => {
                 </Button>
               </Form>
               <div className="text-center mt-3">
-                <Link to="/esqueci-senha">Esqueci a senha</Link> | <Link to="/novo-usuario">Novo</Link>
+                <Link to="/esqueci-senha">Esquecia senha</Link> |   --   | <Link to="/novo-usuario">Novo</Link>
               </div>
             </Card.Body>
           </Card>

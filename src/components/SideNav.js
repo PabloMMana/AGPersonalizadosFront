@@ -16,7 +16,9 @@ const SideNav = () => {
         <Nav.Link>Estoque</Nav.Link>
       </LinkContainer></h1>
       
-      
+      <h1><LinkContainer to="/login">
+        <Nav.Link>Sair</Nav.Link>
+      </LinkContainer></h1>
     </Nav>
   );
 };
