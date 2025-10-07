@@ -2,14 +2,19 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Button, Modal, Form, Alert } from 'react-bootstrap';
 import ClienteSelector from '../components/ClienteSelector'; // Importe o componente
+import PedidoItensForm from '../components/PedidoItensForm';
 
 const Pedidos = () => {
+    const [showItemManagementModal, setShowItemManagementModal] = useState(false);
+    const [managingPedido, setManagingPedido] = useState(null); 
     const [pedidos, setPedidos] = useState([]);
     const [clientes, setClientes] = useState([]);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showClienteSelector, setShowClienteSelector] = useState(false); // Novo estado
     const [currentPedido, setCurrentPedido] = useState(null);
+    const [showViewItemsModal, setShowViewItemsModal] = useState(false);
+    const [viewingPedido, setViewingPedido] = useState(null); 
     const [newPedido, setNewPedido] = useState({
         clienteId: null, // Alterado
         dataPedido: '',
@@ -31,6 +36,29 @@ const Pedidos = () => {
         } catch (error) {
             console.error('Erro ao buscar dados:', error);
         }
+    };
+
+    const handleShowItemManagementModal = (pedido) => {
+        console.log("Objeto Pedido Recebido:", pedido);
+        setManagingPedido(pedido);
+        setShowItemManagementModal(true);
+    };
+    const handleCloseItemManagementModal = () => {
+        setShowItemManagementModal(false);
+        // Garante que a lista de pedidos seja atualizada após qualquer alteração (adição, edição, exclusão)
+        fetchData(); 
+        setManagingPedido(null);
+    };
+
+    const handleShowViewItemsModal = (pedido) => {
+        
+        setViewingPedido(pedido);
+        setShowViewItemsModal(true);
+    };
+
+    const handleCloseViewItemsModal = () => {
+        setShowViewItemsModal(false);
+        setViewingPedido(null);
     };
 
     const handleDelete = async (id) => {
@@ -111,8 +139,7 @@ const Pedidos = () => {
                         <th>Cliente</th>
                         <th>Nome do Produto</th>
                         <th>Detalhes</th>
-                        <th>Quantidade</th>
-                        <th>Ações</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -127,6 +154,9 @@ const Pedidos = () => {
                                 <Button variant="info" className="me-2" onClick={() => handleShowEditModal(pedido)}>
                                     Editar
                                 </Button>
+                                <Button variant="info" className="me-2" onClick={() => handleShowItemManagementModal(pedido)}>
+                                    Itens do Pedido
+                                </Button>
                                 <Button variant="danger" onClick={() => handleDelete(pedido.id)}>
                                     Excluir
                                 </Button>
@@ -135,6 +165,48 @@ const Pedidos = () => {
                     ))}
                 </tbody>
             </Table>
+
+            <Modal show={showItemManagementModal} onHide={handleCloseItemManagementModal} size="xl">
+                <Modal.Header closeButton>
+                    <Modal.Title>Gerenciar Itens do Pedido #{managingPedido?.id} - Cliente: {getClienteNome(managingPedido?.clienteId)}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {managingPedido && (
+                         <PedidoItensForm
+                            pedidoId={managingPedido.id}
+                            initialItens={managingPedido.pedidoItens}
+                            // Callback para garantir que a modal de gerenciamento atualize a lista principal
+                            onItemUpdated={fetchData} 
+                        />
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseItemManagementModal}>
+                        Fechar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={showViewItemsModal} onHide={handleCloseViewItemsModal} size="lg">
+                <Modal.Header closeButton>
+                    <Modal.Title>Itens do Pedido #{viewingPedido?.id} - Cliente: {getClienteNome(viewingPedido?.clienteId)}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {viewingPedido && (
+                         <PedidoItensForm
+                            pedidoId={managingPedido.id}
+                            initialItens={managingPedido.pedidoItens}
+                            onItemUpdated={fetchData} // Não precisamos de callback de atualização
+                            isReadOnly={true} // Diz para o componente exibir apenas a lista
+                        />
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseViewItemsModal}>
+                        Fechar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
             {/* Modal de Edição (mantido como está) */}
             <Modal show={showEditModal} onHide={handleCloseEditModal}>
