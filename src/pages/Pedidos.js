@@ -38,11 +38,28 @@ const Pedidos = () => {
         }
     };
 
-    const handleShowItemManagementModal = (pedido) => {
-        console.log("Objeto Pedido Recebido:", pedido);
-        setManagingPedido(pedido);
+    const handleShowItemManagementModal = async (pedido) => { // Tornar assíncrona
+    console.log("Objeto Pedido Recebido (Antes de buscar itens):", pedido);
+    
+    try {
+        // NOVO PASSO: BUSCAR A LISTA DE ITENS DO ENDPOINT DEDICADO QUE FUNCIONA
+        const itensResponse = await axios.get(`http://localhost:5000/api/PedidoItens/${pedido.id}`); 
+        const itensDoPedido = itensResponse.data;
+        
+        // Criar um objeto de Pedido com a lista de itens para passar ao PedidoItensForm
+        const pedidoComItens = {
+            ...pedido,
+            pedidoItens: itensDoPedido // Adicionar a lista de itens na propriedade correta
+        };
+
+        setManagingPedido(pedidoComItens);
         setShowItemManagementModal(true);
-    };
+        
+    } catch (error) {
+        console.error('Erro ao buscar itens do pedido:', error);
+        alert('Erro ao carregar itens. Verifique o console.');
+    }
+};
     const handleCloseItemManagementModal = () => {
         setShowItemManagementModal(false);
         // Garante que a lista de pedidos seja atualizada após qualquer alteração (adição, edição, exclusão)

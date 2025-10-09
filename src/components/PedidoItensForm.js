@@ -21,8 +21,7 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
     }, []);
     
     useEffect(() => {
-        console.log("Itens recebidos na prop initialItens:", initialItens);
-        // Atualiza a lista de itens se o pedido mudar no componente pai
+        console.log("Itens recebidos na prop initialItens:", initialItens);        
         setItens(initialItens || []);
     }, [initialItens]);
 
@@ -48,7 +47,7 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
             };
             
             await axios.post('http://localhost:5000/api/PedidoItens/', itemParaAdicionar);
-            
+            onItemUpdated();
             if (onItemUpdated) {
                 onItemUpdated(); // Atualiza a lista de pedidos no componente pai
             }
@@ -65,7 +64,7 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
             try {
                 // Endpoint DELETE /api/PedidoItens/{id}
                 await axios.delete(`http://localhost:5000/api/PedidoItens/${itemId}`);
-                
+                onItemUpdated();
                 if (onItemUpdated) {
                     onItemUpdated(); // Atualiza a lista de pedidos no componente pai
                 }
@@ -107,7 +106,7 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
 
             // Endpoint PUT /api/PedidoItens/{id}
             await axios.put(`http://localhost:5000/api/PedidoItens/${itemId}`, itemParaSalvar);
-            
+             onItemUpdated();
             if (onItemUpdated) {
                 onItemUpdated(); // Atualiza a lista de pedidos no componente pai
             }
