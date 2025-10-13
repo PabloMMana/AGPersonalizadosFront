@@ -61,7 +61,7 @@ const Login = () => {
                 </Button>
               </Form>
               <div className="text-center mt-3">
-                <Link to="/esqueci-senha">Esquecia senha</Link> |   --   | <Link to="/novo-usuario">Novo</Link>
+                <Link to="/esqueci-senha">Esqueci minha senha</Link> |   --   | <Link to="/novo-usuario">Novo</Link>
               </div>
             </Card.Body>
           </Card>
