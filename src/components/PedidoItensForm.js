@@ -79,20 +79,30 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
 };
 
     // --- Lógica de Exclusão (NOVA) ---
-    const handleDeleteItem = async (itemId) => {
-        if (window.confirm('Tem certeza que deseja excluir este item?')) {
-            try {
-                // Endpoint DELETE /api/PedidoItens/{id}
-                await axios.delete(`http://localhost:5000/api/PedidoItens/${itemId}`);
+   const handleDeleteItem = async (itemId) => {
+    if (window.confirm('Tem certeza que deseja excluir este item?')) {
+        try {
+            // Endpoint DELETE /api/PedidoItens/{id}
+            await axios.delete(`http://localhost:5000/api/PedidoItens/${itemId}`);
+            
+            // PASSO CRUCIAL: ATUALIZA O ESTADO LOCAL
+            // Filtra o array de 'itens', criando um novo array sem o item excluído.
+            setItens(prevItens => prevItens.filter(item => item.id !== itemId));
+
+            // Notifica o componente pai (Pedidos.js) para recarregar o pedido completo,
+            // caso o valor total ou outros dados precisem ser atualizados.
+            if (onItemUpdated) {
                 onItemUpdated();
-                if (onItemUpdated) {
-                    onItemUpdated(); // Atualiza a lista de pedidos no componente pai
-                }
-            } catch (error) {
-                console.error('Erro ao excluir item:', error);
             }
+            
+            // Remova qualquer chamada 'onItemUpdated()' duplicada aqui.
+
+        } catch (error) {
+            console.error('Erro ao excluir item:', error);
+            // Opcional: Mostrar uma mensagem de erro para o usuário
         }
-    };
+    }
+};
 
     // --- Lógica de Edição (NOVA) ---
     const handleStartEdit = (item) => {
