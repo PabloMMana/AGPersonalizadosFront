@@ -110,34 +110,43 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
     };
 
     const handleSaveEdit = async (itemId) => {
-        try {
-            const itemOriginal = itens.find(i => i.id === itemId);
+    try {
+        const itemOriginal = itens.find(i => i.id === itemId);
 
-            const itemParaSalvar = {
-                // Inclui todas as propriedades necessárias do item original
-                ...itemOriginal, 
-                // Atualiza as propriedades editáveis
-                quantidade: parseInt(editData.quantidade),
-                precoUnitario: parseFloat(editData.precoUnitario),
-                
-                // Garante que o PedidoId seja enviado, caso seu PUT exija
-                pedidoId: pedidoId 
-            };
+        const itemParaSalvar = {
+            // Inclui todas as propriedades necessárias do item original
+            ...itemOriginal, 
+            // Atualiza as propriedades editáveis
+            quantidade: parseInt(editData.quantidade),
+            precoUnitario: parseFloat(editData.precoUnitario),
+            
+            // Garante que o PedidoId seja enviado, caso seu PUT exija
+            pedidoId: pedidoId 
+        };
 
-            // Endpoint PUT /api/PedidoItens/{id}
-            await axios.put(`http://localhost:5000/api/PedidoItens/${itemId}`, itemParaSalvar);
-             onItemUpdated();
-            if (onItemUpdated) {
-                onItemUpdated(); // Atualiza a lista de pedidos no componente pai
-            }
-
-            setEditingId(null); // Sai do modo de edição
-            setEditData({});
-
-        } catch (error) {
-            console.error('Erro ao salvar item:', error);
+        // Endpoint PUT /api/PedidoItens/{id}
+        await axios.put(`http://localhost:5000/api/PedidoItens/${itemId}`, itemParaSalvar);
+        
+        // PASSO CRUCIAL: Atualiza o estado 'itens' localmente.
+        // Isso mapeia o array e substitui APENAS o item editado.
+        setItens(prevItens => 
+            prevItens.map(item => 
+                item.id === itemId ? itemParaSalvar : item
+            )
+        );
+        
+        // Remove a chamada duplicada e mantém apenas uma:
+        if (onItemUpdated) {
+            onItemUpdated(); // Notifica o componente pai para atualizar o Valor Total.
         }
-    };
+
+        setEditingId(null); // Sai do modo de edição
+        setEditData({});
+
+    } catch (error) {
+        console.error('Erro ao salvar item:', error);
+    }
+};
     
     // --- Funções Auxiliares ---
     const getProdutoNome = (produtoId) => {
