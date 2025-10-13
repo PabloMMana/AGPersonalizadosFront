@@ -21,9 +21,20 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
     }, []);
     
     useEffect(() => {
-        console.log("Itens recebidos na prop initialItens:", initialItens);        
-        setItens(initialItens || []);
-    }, [initialItens]);
+    if (pedidoId) {
+        fetchItens(pedidoId); // Usa a nova função de busca
+    }
+}, [pedidoId]); // Dispara sempre que o ID do pedido muda
+
+    //buscar itens
+    const fetchItens = async (id) => {
+    try {
+        const response = await axios.get(`http://localhost:5000/api/PedidoItens/${id}`);
+        setItens(response.data); // Atualiza o estado 'itens' com a nova lista
+    } catch (error) {
+        console.error('Erro ao buscar itens do pedido:', error);
+    }
+};
 
     // Busca de Produtos
     const fetchProdutos = async () => {
@@ -37,26 +48,35 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
 
     // --- Lógica de Adição (Mantida) ---
     const handleAddItem = async (e) => {
-        e.preventDefault();
-        try {
-            const itemParaAdicionar = {
-                ...novoItem,
-                pedidoId: pedidoId,
-                quantidade: parseInt(novoItem.quantidade),
-                precoUnitario: parseFloat(novoItem.precoUnitario)
-            };
-            
-            await axios.post('http://localhost:5000/api/PedidoItens/', itemParaAdicionar);
-            onItemUpdated();
-            if (onItemUpdated) {
-                onItemUpdated(); // Atualiza a lista de pedidos no componente pai
-            }
-            
-            setNovoItem({ produtoId: '', quantidade: '', precoUnitario: '' });
-        } catch (error) {
-            console.error('Erro ao adicionar item:', error);
+    e.preventDefault();
+    try {
+        const itemParaAdicionar = {
+            ...novoItem,
+            pedidoId: pedidoId,
+            quantidade: parseInt(novoItem.quantidade),
+            precoUnitario: parseFloat(novoItem.precoUnitario)
+        };
+        
+        // 1. Envia o novo item para o backend
+        await axios.post('http://localhost:5000/api/PedidoItens/', itemParaAdicionar);
+        
+        // 2. PASSO CRUCIAL: Recarrega a lista completa de itens
+        await fetchItens(pedidoId);
+        
+        // 3. Limpa o formulário de adição
+        setNovoItem({ produtoId: '', quantidade: '', precoUnitario: '' });
+        
+        // 4. Opcional: Notifica o pai (se o pai precisar atualizar, por exemplo, o Valor Total)
+        if (onItemUpdated) {
+            onItemUpdated(); 
         }
-    };
+
+        // Remova a chamada 'onItemUpdated()' duplicada
+        
+    } catch (error) {
+        console.error('Erro ao adicionar item:', error);
+    }
+};
 
     // --- Lógica de Exclusão (NOVA) ---
     const handleDeleteItem = async (itemId) => {
