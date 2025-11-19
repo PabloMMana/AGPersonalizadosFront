@@ -74,7 +74,7 @@ const EstoqueForm = ({ show, handleClose, estoqueParaEditar, onSaveSuccess }) =>
             } else {
                 // Requisição POST para Adição
                 await axios.post(API_URL, dataToSend);
-            }
+            }   
             
             onSaveSuccess(); // Notifica o componente pai para recarregar a lista
             handleClose(); // Fecha o modal
