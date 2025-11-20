@@ -9,6 +9,9 @@ const SideNav = () => {
       <h1><LinkContainer to="/dashboard/clientes">
         <Nav.Link>Clientes</Nav.Link>
       </LinkContainer></h1>
+      <h1><LinkContainer to="/dashboard/produtos">
+        <Nav.Link>Produtos</Nav.Link>
+      </LinkContainer></h1>
       <h1><LinkContainer to="/dashboard/pedidos">
         <Nav.Link>Pedidos</Nav.Link>
       </LinkContainer></h1>

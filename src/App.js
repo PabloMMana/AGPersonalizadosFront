@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'; // Você criará este componente depo
 import Clientes from './pages/Clientes';
 import Pedidos from './pages/Pedidos';
 import Estoques from './pages/Estoques';
+import Produtos from './pages/Produtos';
 
 
 
@@ -30,7 +31,8 @@ function App() {
           {/* Rotas aninhadas que serão renderizadas dentro do <Outlet /> do Dashboard */}
           <Route path="clientes" element={<Clientes />} />  
           <Route path="pedidos" element={<Pedidos />} /> 
-          <Route path="estoques" element={<Estoques />} />                      
+          <Route path="estoques" element={<Estoques />} />    
+          <Route path="produtos" element={<Produtos />} />                   
         </Route>
 
         {/* Redireciona a raiz para o login */}
