@@ -14,6 +14,8 @@ const ProdutoForm = ({ show, handleClose, produtoParaEditar, onSaveSuccess }) =>
         nome: '',
         descricao: '',
         preco: 0.00,
+        quantidade:20.00,
+        EstoqueId: 1,
     });
     
     // 2. Estados de Controle
@@ -22,20 +24,19 @@ const ProdutoForm = ({ show, handleClose, produtoParaEditar, onSaveSuccess }) =>
 
     // 3. useEffect para carregar dados ao editar
     useEffect(() => {
-        if (isEditing) {
-            // Se estiver editando, preenche o formulário com os dados do produto
-            setFormData({
-                nome: produtoParaEditar.nome || '',
-                descricao: produtoParaEditar.descricao || '',
-                // Garante que o preço venha como número para o input type="number"
-                preco: produtoParaEditar.preco || 0.00, 
-            });
-        } else {
-            // Se estiver adicionando, limpa o formulário
-            setFormData({ nome: '', descricao: '', preco: 0.00 });
-        }
-        setError('');
-    }, [produtoParaEditar, isEditing]);
+    if (isEditing) {
+        setFormData({
+           nome: produtoParaEditar.nome || '',
+            descricao: produtoParaEditar.descricao || '',
+            preco: produtoParaEditar.preco || 0.00, 
+            quantidade: produtoParaEditar.quantidade || 10.00,
+            EstoqueId: produtoParaEditar.EstoqueId || 1, // Use o ID existente ou 1
+        });
+    } else {
+        setFormData({ nome: '', descricao: '', preco: 0.00, EstoqueId: 1 , quantidade:0.00}); 
+    }
+    setError('');
+}, [produtoParaEditar, isEditing]);
 
     // 4. Função para atualizar o estado conforme o usuário digita
     const handleChange = (e) => {
@@ -44,17 +45,19 @@ const ProdutoForm = ({ show, handleClose, produtoParaEditar, onSaveSuccess }) =>
     };
 
     // 5. Função para lidar com a submissão do formulário
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError('');''
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(''); // ✅ CORRIGIDO: Deve ter apenas um ponto e vírgula
 
-        // Prepara os dados: garante que o preço é enviado como número
-        const dataToSend = {
-            ...formData,
-            preco: parseFloat(formData.preco) 
-        };
-
+    // Prepara os dados: garante que o preço é enviado como número
+    const dataToSend = {
+        ...formData,             
+        preco: parseFloat(formData.preco) ,
+ Estoque: {
+        id: 1 // O ID de um Estoque existente
+    }
+    };
         try {
             if (isEditing) {
                 // Requisição PUT para Edição
