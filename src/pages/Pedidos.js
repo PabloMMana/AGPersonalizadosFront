@@ -4,6 +4,15 @@ import { Table, Button, Modal, Form, Alert } from 'react-bootstrap';
 import ClienteSelector from '../components/ClienteSelector'; // Importe o componente
 import PedidoItensForm from '../components/PedidoItensForm';
 
+const getTodayFormatted = () => {
+    const today = new Date();
+    // Formato YYYY-MM-DD é exigido pelo input type="date"
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // Mês começa em 0
+    const dd = String(today.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`; 
+};
+
 const Pedidos = () => {
     const [showItemManagementModal, setShowItemManagementModal] = useState(false);
     const [managingPedido, setManagingPedido] = useState(null); 
@@ -17,7 +26,7 @@ const Pedidos = () => {
     const [viewingPedido, setViewingPedido] = useState(null); 
     const [newPedido, setNewPedido] = useState({
         clienteId: null, // Alterado
-        dataPedido: '',
+        dataPedido: getTodayFormatted(),
         nomeProduto: '',
         detalhes: '',
         quantidade: '',
@@ -109,7 +118,7 @@ const Pedidos = () => {
 
     // Funções do Modal de Criação (ajustadas)
     const handleShowCreateModal = () => {
-        setNewPedido({ clienteId: null, dataPedido: '', nomeProduto: '', detalhes: '', quantidade: '' });
+        setNewPedido({ clienteId: null, dataPedido: getTodayFormatted(), nomeProduto: '', detalhes: '', quantidade: '' });
         setShowCreateModal(true);
     };
     const handleCloseCreateModal = () => {
