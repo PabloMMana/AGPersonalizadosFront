@@ -14,8 +14,8 @@ const ProdutoForm = ({ show, handleClose, produtoParaEditar, onSaveSuccess }) =>
         nome: '',
         descricao: '',
         preco: 0.00,
-        quantidade:20.00,
-        EstoqueId: 1,
+        //quantidade:20.00,
+        //EstoqueId: 1,
     });
     
     // 2. Estados de Controle
@@ -48,39 +48,52 @@ const ProdutoForm = ({ show, handleClose, produtoParaEditar, onSaveSuccess }) =>
    const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(''); // ✅ CORRIGIDO: Deve ter apenas um ponto e vírgula
+    setError('');
 
-    // Prepara os dados: garante que o preço é enviado como número
+    // 🛑 MUDANÇA CRÍTICA AQUI: Estrutura correta para um NOVO PRODUTO COM NOVO ESTOQUE
     const dataToSend = {
-        ...formData,             
-        preco: parseFloat(formData.preco) ,
- Estoque: {
-        id: 1 // O ID de um Estoque existente
-    }
+        // Propriedades do Produto (garantindo que preco e os outros campos estejam corretos)
+        nome: formData.nome,
+        descricao: formData.descricao,
+        preco: parseFloat(formData.preco),
+        
+        // Propriedade de Navegação Estoque (em PascalCase para o C#)
+        // Se for um NOVO PRODUTO, o Estoque também é NOVO (ID=0) e a Quantidade deve ser 0
+        Estoque: {
+            // Se o ID for 0, o EF Core entenderá que deve CRIAR um novo registro.
+            id: 0, 
+            quantidade: 0, // Novo produto começa com 0 em estoque
+            // Não precisa enviar ProdutoId aqui, pois o EF Core o vinculará automaticamente
+            // ao produto recém-criado.
+        }
     };
-        try {
-            if (isEditing) {
-                // Requisição PUT para Edição
-                // É CRÍTICO enviar o ID no corpo e na URL para que o backend saiba qual atualizar
-                const dataToPut = { id: produtoParaEditar.id, ...dataToSend };
-                await axios.put(`${API_URL}/${produtoParaEditar.id}`, dataToPut);
-            } else {
-                // Requisição POST para Adição
-                await axios.post(API_URL, dataToSend);
-            }
-            
-            onSaveSuccess(); // Sucesso: fecha o modal e recarrega a lista
-        } catch (err) {
-            console.error('Erro ao salvar produto:', err.response || err);
-            
-            // Tenta obter a mensagem de erro detalhada do backend
-            const errorMsg = err.response?.data?.title || err.response?.data?.message || 'Erro ao salvar o produto. Verifique os dados.';
-            setError(errorMsg);
-        } finally {
-            setLoading(false);
-        }
-    };
+    
+    // Se estiver editando, adicione o ID do Produto
+    if (isEditing) {
+        dataToSend.id = produtoParaEditar.id;
+        // Ao editar, o Estoque.id deve ser o ID do Estoque existente
+        dataToSend.Estoque.id = produtoParaEditar.estoque.id; 
+    } else {
+        // Ao adicionar, o ID do Produto deve ser 0
+        dataToSend.id = 0;
+    }
 
+    try {
+        if (isEditing) {
+            // Requisição PUT para Edição
+            await axios.put(`${API_URL}/${dataToSend.id}`, dataToSend);
+        } else {
+            // Requisição POST para Adição
+            await axios.post(API_URL, dataToSend);
+        }   
+        
+        onSaveSuccess(); 
+    } catch (err) {
+        // ... (lógica de erro)
+    } finally {
+        setLoading(false);
+    }
+};
     return (
         <Modal show={show} onHide={handleClose} backdrop="static">
             <Modal.Header closeButton>
