@@ -7,6 +7,8 @@ import Clientes from './pages/Clientes';
 import Pedidos from './pages/Pedidos';
 import Estoques from './pages/Estoques';
 import Produtos from './pages/Produtos';
+import ForgotPassword from './components/ForgotPassword'; // <-- Adicione esta linha (assumindo que está em components)
+import ResetPassword from './components/ResetPassword';
 
 
 
@@ -22,8 +24,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/esqueci-senha" element={<h1>Esqueci a Senha</h1>} />
+        <Route path="/esqueci-senha" element={<ForgotPassword />} />
         <Route path="/novo-usuario" element={<h1>Novo Usuário</h1>} /> 
+        <Route path="/reset-password" element={<ResetPassword />} />
         
 
         {/* Rotas protegidas (só acessíveis se o usuário estiver logado) */}
