@@ -62,7 +62,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 400px; /* Largura máxima do modal */
+    max-width: 500px; /* Largura máxima do modal */
     text-align: center;
 }
 
@@ -78,9 +78,20 @@
     font-weight: bold;
 }
 
+.modal-content input[type="email"] {
+    /* Garante que o input preencha 100% da largura do seu contêiner pai (.form-group) */
+    width: 100%; 
+    padding: 12px;
+    box-sizing: border-box; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size:18
+}
+
 .modal-content input[type="password"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     box-sizing: border-box; /* Inclui padding e borda na largura total */
     border: 1px solid #ccc;
     border-radius: 4px;

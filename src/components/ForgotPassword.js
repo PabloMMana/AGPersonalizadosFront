@@ -27,23 +27,42 @@ const ForgotPassword = () => {
         }
     };
 
-    return (
-        <div className="card">
-            <h3>Esqueci Minha Senha</h3>
-            <p>Insira seu e-mail para receber o link de redefinição.</p>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    placeholder="Seu email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <button type="submit" disabled={isLoading}>
-                    {isLoading ? 'Enviando...' : 'Enviar Link'}
-                </button>
-            </form>
-            {message && <p className="success-message">{message}</p>}
+   return (
+        // Modal Backdrop: Ocupa toda a tela e escurece o fundo
+        <div className="modal-backdrop">
+            
+            {/* Modal Content: O contêiner centralizado */}
+            <div className="modal-content">
+
+                <h3>Esqueci Minha Senha</h3>
+                <p>Insira seu e-mail para receber o link de redefinição.</p>
+
+                <form onSubmit={handleSubmit}>
+                    
+                    {/* Campo E-mail */}
+                    <div className="form-group">
+                        <label htmlFor="emailInput">E-mail</label>
+                        <input
+                            id="emailInput"
+                            type="email"
+                            placeholder="Seu email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    
+                    {/* Botão de Enviar Link */}
+                    <button type="submit" disabled={isLoading} className="btn-primary">
+                        {isLoading ? 'Enviando...' : 'Enviar Link de Recuperação'}
+                    </button>
+                    
+                </form>
+                
+                {/* Exibição de Mensagens (ajustado para usar as classes do modal) */}
+                {message && <p className="success-message">{message}</p>}
+                
+            </div>
         </div>
     );
 };
