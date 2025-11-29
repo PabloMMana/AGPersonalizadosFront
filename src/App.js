@@ -9,6 +9,7 @@ import Estoques from './pages/Estoques';
 import Produtos from './pages/Produtos';
 import ForgotPassword from './components/ForgotPassword'; // <-- Adicione esta linha (assumindo que está em components)
 import ResetPassword from './components/ResetPassword';
+import Register from './components/Register';
 
 
 
@@ -25,9 +26,9 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/esquecisenha" element={<ForgotPassword />} />
-        <Route path="/novo-usuario" element={<h1>Novo Usuário</h1>} /> 
+        <Route path="/novo-usuario" element={<Register />} /> 
         <Route path="/reset-password" element={<ResetPassword />} />
-        
+       
 
         {/* Rotas protegidas (só acessíveis se o usuário estiver logado) */}
         <Route path="/dashboard" element={<Dashboard />}>
