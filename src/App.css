@@ -58,11 +58,11 @@
 
 .modal-content {
     background: white;
-    padding: 30px;
+    padding: 60px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 500px; /* Largura máxima do modal */
+    max-width: 85%; /* Largura máxima do modal */
     text-align: center;
 }
 
@@ -70,6 +70,7 @@
 .form-group {
     margin-bottom: 15px;
     text-align: left; /* Alinha o label e o input à esquerda */
+    
 }
 
 .form-group label {
@@ -128,4 +129,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.form-label {
+
+  font-weight: bold !important; 
+  font-size: 18px;
 }

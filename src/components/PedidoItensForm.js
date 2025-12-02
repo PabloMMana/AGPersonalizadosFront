@@ -12,7 +12,8 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
     const [novoItem, setNovoItem] = useState({
         produtoId: '',
         quantidade: '',
-        precoUnitario: ''
+        precoUnitario: '',
+        status: 0
     });
 
     // Efeitos
@@ -54,7 +55,8 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
             ...novoItem,
             pedidoId: pedidoId,
             quantidade: parseInt(novoItem.quantidade),
-            precoUnitario: parseFloat(novoItem.precoUnitario)
+            precoUnitario: parseFloat(novoItem.precoUnitario),
+            Starus: 0
         };
         
         // 1. Envia o novo item para o backend
@@ -110,7 +112,13 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
         setEditData({ 
             quantidade: item.quantidade.toString(),
             precoUnitario: item.precoUnitario.toFixed(2).toString(),
-            produtoId: item.produtoId // Mantém o produto para envio
+            produtoId: item.produtoId, // Mantém o produto para envio
+            status: item.status
+
+
+
+
+
         });
     };
 
@@ -131,7 +139,8 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
             precoUnitario: parseFloat(editData.precoUnitario),
             
             // Garante que o PedidoId seja enviado, caso seu PUT exija
-            pedidoId: pedidoId 
+            pedidoId: pedidoId ,
+            status: 0
         };
 
         // Endpoint PUT /api/PedidoItens/{id}
@@ -177,9 +186,9 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
                     <thead>
                         <tr>
                             <th>Produto</th>
-                            <th style={{ width: '15%' }}>Quantidade</th>
+                            <th style={{ width: '10%' }}>Quantidade</th>
                             <th style={{ width: '15%' }}>Preço Unitário</th>
-                            <th style={{ width: '15%' }}>Total</th>
+                            <th style={{ width: '25%' }}>Total</th>
                             <th style={{ width: '20%' }}>Ações</th>
                         </tr>
                     </thead>
@@ -211,6 +220,7 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
                                             value={editData.precoUnitario} 
                                             onChange={handleChangeEdit}
                                             min="0.01"
+                                            
                                         />
                                     ) : (
                                         `R$ ${item.precoUnitario.toFixed(2)}`
@@ -219,7 +229,7 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
                                 
                                 <td>R$ {(item.quantidade * item.precoUnitario).toFixed(2)}</td>
                                 
-                                {/* Coluna Ações (Edição e Exclusão) */}
+                                {/* Coluna Ações (Edição e Exclusãoe e status) */}
                                 <td>
                                     {editingId === item.id ? (
                                         <Button variant="success" size="sm" onClick={() => handleSaveEdit(item.id)} className="me-2">
@@ -230,8 +240,12 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
                                             Editar
                                         </Button>
                                     )}
+                                    
                                     <Button variant="danger" size="sm" onClick={() => handleDeleteItem(item.id)}>
                                         Excluir
+                                    </Button>
+                                    <Button variant="primary" size="sm" onClick={() =>  handleDeleteItem(item.id)}>
+                                        Finalizar o Item !
                                     </Button>
                                 </td>
                             </tr>
@@ -270,6 +284,14 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
                             <Form.Control type="number" step="0.01" value={novoItem.precoUnitario} onChange={(e) => setNovoItem({ ...novoItem, precoUnitario: e.target.value })} min="0.01" />
                         </Form.Group>
                     </Col>
+
+                     <Col>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Finalizado</Form.Label>
+                            <Form.Control type="number" step="0.01" value={novoItem.status} onChange={(e) => setNovoItem({ ...novoItem, status: e.target.value })} min="0" />
+                        </Form.Group>
+                    </Col>
+
                     <Col className="d-flex align-items-end">
                         <Button variant="primary" type="submit">Adicionar</Button>
                     </Col>

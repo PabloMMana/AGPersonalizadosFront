@@ -248,6 +248,7 @@ const Pedidos = () => {
                                     type="text"
                                     value={currentPedido.dataPedido}
                                     onChange={(e) => setCurrentPedido({ ...currentPedido, dataPedido: e.target.value })}
+                                    disabled
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3">
@@ -270,8 +271,9 @@ const Pedidos = () => {
                                 <Form.Label>Quantidade</Form.Label>
                                 <Form.Control
                                     type="number"
-                                    value={currentPedido.quantidade}
+                                    value={1}
                                     onChange={(e) => setCurrentPedido({ ...currentPedido, quantidade: parseInt(e.target.value) })}
+                                    disa
                                 />
                             </Form.Group>
                             <Button variant="primary" type="submit">
@@ -290,14 +292,14 @@ const Pedidos = () => {
                 <Modal.Body>
                     <Form onSubmit={handleCreate}>
                         <Form.Group className="mb-3">
-                            <Form.Label>Cliente</Form.Label>
+                            <Form.Label>Cliente   -</Form.Label>
                             {newPedido.clienteId ? (
                                 <Alert variant="info" className="d-flex justify-content-between align-items-center">
                                     Cliente Selecionado: **{getClienteNome(newPedido.clienteId)}**
                                     <Button size="sm" variant="outline-secondary" onClick={handleShowClienteSelector}>Mudar</Button>
                                 </Alert>
                             ) : (
-                                <Button variant="secondary" onClick={handleShowClienteSelector}>
+                                <Button variant="danger" onClick={handleShowClienteSelector}>
                                     Selecionar Cliente
                                 </Button>
                             )}
@@ -308,9 +310,11 @@ const Pedidos = () => {
                                 type="date"
                                 value={newPedido.dataPedido}
                                 onChange={(e) => setNewPedido({ ...newPedido, dataPedido: e.target.value })}
+                                disabled
                             />
+                           
                         </Form.Group>
-                        <Form.Group className="mb-3">
+                        <Form.Group className="mb-3" >
                             <Form.Label>Nome do Produto</Form.Label>
                             <Form.Control
                                 type="text"
@@ -330,8 +334,9 @@ const Pedidos = () => {
                             <Form.Label>Quantidade</Form.Label>
                             <Form.Control
                                 type="number"
-                                value={newPedido.quantidade}
+                                value={1}
                                 onChange={(e) => setNewPedido({ ...newPedido, quantidade: parseInt(e.target.value) })}
+                                disabled
                             />
                         </Form.Group>
                         <Button variant="primary" type="submit">
