@@ -288,7 +288,8 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
                      <Col>
                         <Form.Group className="mb-3">
                             <Form.Label>Finalizado</Form.Label>
-                            <Form.Control type="number" step="0.01" value={novoItem.status} onChange={(e) => setNovoItem({ ...novoItem, status: e.target.value })} min="0" />
+                            <Form.Control type="number" step="0.01" value={novoItem.status} onChange={(e) => setNovoItem({ ...novoItem, status: e.target.value })} min="0" disabled/>
+                        
                         </Form.Group>
                     </Col>
 

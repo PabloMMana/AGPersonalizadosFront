@@ -29,7 +29,7 @@ const Pedidos = () => {
         dataPedido: getTodayFormatted(),
         nomeProduto: '',
         detalhes: '',
-        quantidade: '',
+        quantidade: '1',
     });
 
     useEffect(() => {
@@ -118,7 +118,7 @@ const Pedidos = () => {
 
     // Funções do Modal de Criação (ajustadas)
     const handleShowCreateModal = () => {
-        setNewPedido({ clienteId: null, dataPedido: getTodayFormatted(), nomeProduto: '', detalhes: '', quantidade: '' });
+        setNewPedido({ clienteId: null, dataPedido: getTodayFormatted(), nomeProduto: '', detalhes: '', quantidade: 1 });
         setShowCreateModal(true);
     };
     const handleCloseCreateModal = () => {
