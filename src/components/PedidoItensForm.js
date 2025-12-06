@@ -87,21 +87,48 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
             // Endpoint DELETE /api/PedidoItens/{id}
             await axios.delete(`http://localhost:5000/api/PedidoItens/${itemId}`);
             
-            // PASSO CRUCIAL: ATUALIZA O ESTADO LOCAL
-            // Filtra o array de 'itens', criando um novo array sem o item excluído.
             setItens(prevItens => prevItens.filter(item => item.id !== itemId));
-
-            // Notifica o componente pai (Pedidos.js) para recarregar o pedido completo,
-            // caso o valor total ou outros dados precisem ser atualizados.
+            
             if (onItemUpdated) {
                 onItemUpdated();
             }
             
-            // Remova qualquer chamada 'onItemUpdated()' duplicada aqui.
+            
 
         } catch (error) {
             console.error('Erro ao excluir item:', error);
             // Opcional: Mostrar uma mensagem de erro para o usuário
+        }
+    }
+};
+
+// --- Lógica de finalizar (NOVA) ---
+  const handleFinalizarItem = async (itemId) => {
+    if (window.confirm('Tem certeza que deseja Finalizar este item? Isso dará baixa no estoque.')) {
+        try {
+            // 1. CHAMA A API PARA FINALIZAR/DAR BAIXA NO ESTOQUE (POST /api/pedido-itens/{id}/finalizar)
+            // Assumindo o endpoint POST /api/pedido-itens/{id}/finalizar
+            await axios.post(`http://localhost:5000/api/pedidoitens/${itemId}/finalizar`);
+            
+            // 2. ATUALIZA O ESTADO LOCAL (NÃO EXCLUI, APENAS MUDA O STATUS)
+            setItens(prevItens => 
+                // Usa .map para iterar sobre o array e encontrar o item correto
+                prevItens.map(item => 
+                    item.id === itemId 
+                    ? { ...item, status: 1 } // 🛑 Se o ID coincide, cria um NOVO objeto com status: 1 (Finalizado)
+                    : item                     // Se o ID não coincide, retorna o item original
+                )
+            );
+            
+            // 3. Notifica o componente pai para recarregar totais, se necessário
+            if (onItemUpdated) {
+                onItemUpdated();
+            }
+
+        } catch (error) {
+            console.error('Erro ao finalizar item:', error);
+            // Mensagem de erro mais útil (ex: estoque insuficiente, se for o caso)
+            alert(`Falha ao finalizar. Verifique o estoque ou o servidor. Erro: ${error.response?.data || error.message}`);
         }
     }
 };
@@ -189,6 +216,7 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
                             <th style={{ width: '10%' }}>Quantidade</th>
                             <th style={{ width: '15%' }}>Preço Unitário</th>
                             <th style={{ width: '25%' }}>Total</th>
+                            <th style={{ width: '25%' }}>Status</th>
                             <th style={{ width: '20%' }}>Ações</th>
                         </tr>
                     </thead>
@@ -228,26 +256,49 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
                                 </td>
                                 
                                 <td>R$ {(item.quantidade * item.precoUnitario).toFixed(2)}</td>
+                                    
+                                <td>{item.status === 1 ? 'Finalizado' : 'Aberto'}</td>
                                 
                                 {/* Coluna Ações (Edição e Exclusãoe e status) */}
                                 <td>
-                                    {editingId === item.id ? (
-                                        <Button variant="success" size="sm" onClick={() => handleSaveEdit(item.id)} className="me-2">
-                                            Salvar
-                                        </Button>
-                                    ) : (
-                                        <Button variant="warning" size="sm" onClick={() => handleStartEdit(item)} className="me-2">
-                                            Editar
-                                        </Button>
-                                    )}
-                                    
-                                    <Button variant="danger" size="sm" onClick={() => handleDeleteItem(item.id)}>
-                                        Excluir
-                                    </Button>
-                                    <Button variant="primary" size="sm" onClick={() =>  handleDeleteItem(item.id)}>
-                                        Finalizar o Item !
-                                    </Button>
-                                </td>
+    {/* 1. Botão EDITAR / SALVAR (Condicional) */}
+    {editingId === item.id ? (
+        <Button 
+        variant="success" 
+        size="sm" 
+        onClick={() => handleSaveEdit(item.id)} 
+        className="me-2"
+        disabled={item.status === 1}        
+        >
+            Salvar
+        </Button>
+    ) : (
+        <Button variant="warning" size="sm" onClick={() => handleStartEdit(item)} className="me-2" disabled={item.status === 1}>
+            Editar
+        </Button>
+    )}
+    
+    {/* 2. Botão EXCLUIR (Sempre visível) */}
+    <Button 
+        variant="danger" 
+        size="sm" 
+        onClick={() => handleDeleteItem(item.id)} 
+        className="me-2" // Adiciona espaço após o Excluir, se necessário
+        disabled={item.status === 1}
+    >
+        Excluir
+    </Button>
+    
+    {/* 3. Botão FINALIZAR (Sempre visível, mas desabilitado se já finalizado) */}
+    <Button 
+        variant="primary" 
+        size="sm" 
+        onClick={() => handleFinalizarItem(item.id)}
+        disabled={item.status === 1} // 🛑 Desabilita se for Finalizado
+    >
+        {item.status === 1 ? 'Item Finalizado' : 'Finalizar o Item !'}
+    </Button>
+</td>
                             </tr>
                         ))}
                     </tbody>
