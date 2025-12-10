@@ -47,6 +47,7 @@ const Pedidos = () => {
         }
     };
 
+   
     const handleShowItemManagementModal = async (pedido) => { // Tornar assíncrona
     console.log("Objeto Pedido Recebido (Antes de buscar itens):", pedido);
     
@@ -153,6 +154,36 @@ const Pedidos = () => {
         const cliente = clientes.find(c => c.id === clienteId);
         return cliente ? cliente.nome : 'Cliente não encontrado';
     };
+   
+    const API_URL = 'http://localhost:5000/api/Pedido'; 
+
+// ... (Outras funções: fetchData, handleShowItemManagementModal, handleDelete, etc.)
+
+const handleFinalizarPedido = async (pedidoId) => {
+    // 1. Confirmação
+    if (!window.confirm(`Confirma a finalização e o registro da venda do Pedido #${pedidoId}?`)) {
+        return;
+    }
+
+    try {
+        // 2. Chamada ao endpoint do Backend (PedidosController)
+        await axios.post(`${API_URL}/${pedidoId}/finalizar`);
+
+        alert(`SUCESSO: Pedido #${pedidoId} finalizado e venda registrada.`);
+        
+        // 3. Atualiza a lista principal para exibir o novo status
+        fetchData(); 
+
+    } catch (error) {
+        console.error('Erro ao finalizar o pedido:', error);
+        
+        // Captura a mensagem de erro do backend (ex: "Não é possível finalizar... há itens pendentes")
+        const errorMessage = error.response?.data?.message || 'Erro de comunicação com o servidor. Verifique o console.';
+        
+        // 🛑 Aqui o erro de validação (itens pendentes) é exibido
+        alert(`FALHA na Finalização: ${errorMessage}`);
+    }
+};
 
     return (
         <div>
@@ -177,17 +208,71 @@ const Pedidos = () => {
                             <td>{pedido.detalhes}</td>
                             <td>{pedido.quantidade}</td>
                             <td>
-                                <Button variant="info" className="me-2" onClick={() => handleShowEditModal(pedido)}>
-                                    Editar
-                                </Button>
-                                <Button variant="info" className="me-2" onClick={() => handleShowItemManagementModal(pedido)}>
-                                    Itens do Pedido
-                                </Button>
-                                <Button variant="danger" onClick={() => handleDelete(pedido.id)}>
-                                    Excluir
-                                </Button>
+
+                            {pedido.status === 1 ? (
+                                                <Button variant="secondary" size="sm" className="me-2" disabled>
+                                                   Itens do Pedido
+                                                </Button>
+                                            ) : (
+                                                <Button 
+                                                    variant="info" 
+                                                    size="2"
+                                                    className="me-2" 
+                                                    onClick={() => handleShowEditModal(pedido)}
+                                                >
+                                                    Editar
+                                                </Button>
+                                            )}                             
+
+                            {pedido.status === 1 ? (
+                                                <Button variant="secondary" size="sm" className="me-2" disabled>
+                                                   Itens do Pedido
+                                                </Button>
+                                            ) : (
+                                                <Button 
+                                                    variant="info" 
+                                                    size="2"
+                                                    className="me-2" 
+                                                    onClick={() => handleShowItemManagementModal(pedido)}
+                                                >
+                                                    Itens do Pedido
+                                                </Button>
+                                            )}                             
+
+
+                                 {pedido.status === 1 ? (
+                                                <Button variant="secondary" size="sm" className="me-2" disabled>
+                                                    FINALIZADO
+                                                </Button>
+                                            ) : (
+                                                <Button 
+                                                    variant="success" 
+                                                    size="2"
+                                                    className="me-2" 
+                                                    onClick={() => handleFinalizarPedido(pedido.id)}
+                                                >
+                                                    Finalizar Pedido
+                                                </Button>
+                                            )}
+
+                                {pedido.status === 1 ? (
+                                                <Button variant="secondary" size="sm" className="me-2" disabled>
+                                                    Excluir
+                                                </Button>
+                                            ) : (
+                                                <Button 
+                                                    variant="danger" 
+                                                    size="2"
+                                                    className="me-2" 
+                                                    onClick={() => handleDelete(pedido.id)}
+                                                >
+                                                    Excluir
+                                                </Button>
+                                            )}                                                 
+                                
                             </td>
                         </tr>
+                        
                     ))}
                 </tbody>
             </Table>
