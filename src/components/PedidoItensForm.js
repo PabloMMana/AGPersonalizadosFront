@@ -54,9 +54,9 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
         const itemParaAdicionar = {
             ...novoItem,
             pedidoId: pedidoId,
-            quantidade: parseInt(novoItem.quantidade),
+            quantidade: parseInt(novoItem.quantidade),           
             precoUnitario: parseFloat(novoItem.precoUnitario),
-            Starus: 0
+            Status: 0
         };
         
         // 1. Envia o novo item para o backend
@@ -214,9 +214,10 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
                         <tr>
                             <th>Produto</th>
                             <th style={{ width: '10%' }}>Quantidade</th>
+                            <th style={{ width: '10%' }}>Descrição</th>
                             <th style={{ width: '15%' }}>Preço Unitário</th>
                             <th style={{ width: '25%' }}>Total</th>
-                            <th style={{ width: '25%' }}>Status</th>
+                            <th style={{ width: '10%' }}>Status</th>
                             <th style={{ width: '20%' }}>Ações</th>
                         </tr>
                     </thead>
@@ -236,6 +237,20 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
                                         />
                                     ) : (
                                         item.quantidade
+                                    )}
+                                </td>
+                                {/* Coluna Descrição (Editável) */}
+                                <td>
+                                    {editingId === item.id ? (
+                                        <Form.Control 
+                                            type="text" 
+                                            name="descricao"
+                                            value={editData.descricao} 
+                                            onChange={handleChangeEdit}
+                                            min="1"
+                                        />
+                                    ) : (
+                                        item.descricao
                                     )}
                                 </td>
                                 {/* Coluna Preço Unitário (Editável) */}
@@ -327,6 +342,12 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
                         <Form.Group className="mb-3">
                             <Form.Label>Quantidade</Form.Label>
                             <Form.Control type="number" value={novoItem.quantidade} onChange={(e) => setNovoItem({ ...novoItem, quantidade: e.target.value })} min="1" />
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Descrição</Form.Label>
+                            <Form.Control type="text" value={novoItem.descricao} onChange={(e) => setNovoItem({ ...novoItem, descricao: e.target.value })} min="1" />
                         </Form.Group>
                     </Col>
                     <Col>

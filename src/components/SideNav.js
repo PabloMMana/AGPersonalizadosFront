@@ -4,22 +4,24 @@ import { LinkContainer } from 'react-router-bootstrap'; // Importe este componen
 
 const SideNav = () => {
   return (
-    <Nav className="flex-column bg-light vh-100 p-3">
-      {/* Exemplo corrigido para Clientes */}
+    <Nav className="flex-column bg-light vh-100 p-3" style={{ width: '265px'}}>
+      
       <h1><LinkContainer to="/dashboard/clientes">
         <Nav.Link>Clientes</Nav.Link>
       </LinkContainer></h1>
-      <h1><LinkContainer to="/dashboard/produtos">
+      <h1 className="menu-divisor"><LinkContainer to="/dashboard/fornecedor">
+        <Nav.Link>Fornecedor</Nav.Link>
+      </LinkContainer></h1>
+      <h1 ><LinkContainer to="/dashboard/produtos">
         <Nav.Link>Produtos</Nav.Link>
       </LinkContainer></h1>
       <h1><LinkContainer to="/dashboard/pedidos">
         <Nav.Link>Pedidos</Nav.Link>
       </LinkContainer></h1>
-      <h1><LinkContainer to="/dashboard/estoques">
+      <h1 className="menu-divisor"><LinkContainer to="/dashboard/estoques">
         <Nav.Link>Estoque</Nav.Link>
-      </LinkContainer></h1>
-      
-      <h1><LinkContainer to="/login">
+      </LinkContainer></h1>   
+      <h1 ><LinkContainer to="/login">
         <Nav.Link>Sair</Nav.Link>
       </LinkContainer></h1>
     </Nav>

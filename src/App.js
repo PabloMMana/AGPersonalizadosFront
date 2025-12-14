@@ -7,6 +7,7 @@ import Clientes from './pages/Clientes';
 import Pedidos from './pages/Pedidos';
 import Estoques from './pages/Estoques';
 import Produtos from './pages/Produtos';
+import Fornecedor from './pages/Fornecedor';
 import ForgotPassword from './components/ForgotPassword'; // <-- Adicione esta linha (assumindo que está em components)
 import ResetPassword from './components/ResetPassword';
 import Register from './components/Register';
@@ -16,9 +17,9 @@ import Register from './components/Register';
 function App() {
   // Função para verificar se o usuário está autenticado
   const isAuthenticated = () => {
-    // Retorna true se houver um token, caso contrário, retorna false.
-    const token = localStorage.getItem('userToken');
-    return !!token; // !! converte o valor para booleano (true ou false)
+  // Retorna true se houver um token, caso contrário, retorna false.
+  const token = localStorage.getItem('userToken');
+  return !!token; // !! converte o valor para booleano (true ou false)
   };
 
   return (
@@ -36,7 +37,8 @@ function App() {
           <Route path="clientes" element={<Clientes />} />  
           <Route path="pedidos" element={<Pedidos />} /> 
           <Route path="estoques" element={<Estoques />} />    
-          <Route path="produtos" element={<Produtos />} />                   
+          <Route path="produtos" element={<Produtos />} />            
+          <Route path="fornecedor" element={<Fornecedor />} />         
         </Route>
 
         {/* Redireciona a raiz para o login */}

@@ -2,6 +2,13 @@
   text-align: center;
 }
 
+.menu-divisor {
+    /* Define uma borda cinza clara na parte inferior */
+    border-bottom: 5px solid #39c5d8;        
+    padding-bottom: 8px; 
+    margin-bottom: 8px; 
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -77,6 +84,7 @@
     display: block; /* Garante que o label fique em uma linha separada */
     margin-bottom: 5px;
     font-weight: bold;
+    
 }
 
 .modal-content input[type="email"] {
