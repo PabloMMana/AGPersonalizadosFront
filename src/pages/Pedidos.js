@@ -186,7 +186,7 @@ const handleFinalizarPedido = async (pedidoId) => {
 };
 
     return (
-        <div>
+        <div className="p-5">
             <h2>Pedidos</h2>
             <Button variant="success" className="mb-3" onClick={handleShowCreateModal}>Novo Pedido</Button>
             <Table striped bordered hover>

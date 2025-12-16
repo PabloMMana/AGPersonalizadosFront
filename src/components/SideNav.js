@@ -20,7 +20,12 @@ const SideNav = () => {
       </LinkContainer></h1>
       <h1 className="menu-divisor"><LinkContainer to="/dashboard/estoques">
         <Nav.Link>Estoque</Nav.Link>
-      </LinkContainer></h1>   
+      </LinkContainer></h1> 
+      
+      <h1 className="menu-divisor"><LinkContainer to="">
+        <Nav.Link>Compra</Nav.Link>
+      </LinkContainer></h1> 
+
       <h1 ><LinkContainer to="/login">
         <Nav.Link>Sair</Nav.Link>
       </LinkContainer></h1>
