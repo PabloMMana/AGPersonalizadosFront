@@ -12,6 +12,7 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
     const [novoItem, setNovoItem] = useState({
         produtoId: '',
         quantidade: '',
+        descricao:'',
         precoUnitario: '',
         status: 0
     });
@@ -54,7 +55,8 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
         const itemParaAdicionar = {
             ...novoItem,
             pedidoId: pedidoId,
-            quantidade: parseInt(novoItem.quantidade),           
+            quantidade: parseInt(novoItem.quantidade),    
+            descricao: novoItem.descricao,   
             precoUnitario: parseFloat(novoItem.precoUnitario),
             Status: 0
         };
@@ -66,7 +68,7 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
         await fetchItens(pedidoId);
         
         // 3. Limpa o formulário de adição
-        setNovoItem({ produtoId: '', quantidade: '', precoUnitario: '' });
+        setNovoItem({ produtoId: '', quantidade: '',descricao:'', precoUnitario: '' });
         
         // 4. Opcional: Notifica o pai (se o pai precisar atualizar, por exemplo, o Valor Total)
         if (onItemUpdated) {
@@ -137,15 +139,11 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
     const handleStartEdit = (item) => {
         setEditingId(item.id);
         setEditData({ 
-            quantidade: item.quantidade.toString(),
+            quantidade: item.quantidade,
+            descricao: item.descricao,
             precoUnitario: item.precoUnitario.toFixed(2).toString(),
             produtoId: item.produtoId, // Mantém o produto para envio
             status: item.status
-
-
-
-
-
         });
     };
 
@@ -163,6 +161,7 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
             ...itemOriginal, 
             // Atualiza as propriedades editáveis
             quantidade: parseInt(editData.quantidade),
+            descricao: editData.descricao,
             precoUnitario: parseFloat(editData.precoUnitario),
             
             // Garante que o PedidoId seja enviado, caso seu PUT exija
