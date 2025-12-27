@@ -2,15 +2,16 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
-import Dashboard from './pages/Dashboard'; // Você criará este componente depois
+import Dashboard from './pages/Dashboard'; 
 import Clientes from './pages/Clientes';
 import Pedidos from './pages/Pedidos';
 import Estoques from './pages/Estoques';
 import Produtos from './pages/Produtos';
 import Fornecedor from './pages/Fornecedor';
-import ForgotPassword from './components/ForgotPassword'; // <-- Adicione esta linha (assumindo que está em components)
+import ForgotPassword from './components/ForgotPassword'; 
 import ResetPassword from './components/ResetPassword';
 import Register from './components/Register';
+import Compras from './pages/Compras';
 
 
 
@@ -38,7 +39,8 @@ function App() {
           <Route path="pedidos" element={<Pedidos />} /> 
           <Route path="estoques" element={<Estoques />} />    
           <Route path="produtos" element={<Produtos />} />            
-          <Route path="fornecedor" element={<Fornecedor />} />         
+          <Route path="fornecedor" element={<Fornecedor />} />
+          <Route path="compras" element={<Compras />} />            
         </Route>
 
         {/* Redireciona a raiz para o login */}
