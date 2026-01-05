@@ -351,7 +351,7 @@ const PedidoItensForm = ({ pedidoId, initialItens, onItemUpdated }) => {
                     </Col>
                     <Col>
                         <Form.Group className="mb-3">
-                            <Form.Label>Preço Unitário</Form.Label>
+                            <Form.Label>V. Unitário</Form.Label>
                             <Form.Control type="number" step="0.01" value={novoItem.precoUnitario} onChange={(e) => setNovoItem({ ...novoItem, precoUnitario: e.target.value })} min="0.01" />
                         </Form.Group>
                     </Col>
