@@ -149,6 +149,7 @@ const Compras = () => {
                                     onClick={() => handleShowItemManagementModal(compra)}
                                     disabled={compra.status === 1}
                                 >
+                                    
                                     Itens
                                 </Button>
                                 
