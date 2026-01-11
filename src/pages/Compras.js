@@ -144,14 +144,22 @@ const Compras = () => {
                             <td>{compra.descricao}</td>
                             <td>{compra.status === 1 ? <span className="text-success">Finalizada</span> : 'Aberta'}</td>
                             <td>
-                                <Button 
-                                    variant="info" size="sm" className="me-2"
-                                    onClick={() => handleShowItemManagementModal(compra)}
-                                    disabled={compra.status === 1}
-                                >
-                                    
-                                    Itens
-                                </Button>
+                                 {compra.status === 1 ? (
+                                                                                <Button variant="secondary" size="sm" className="me-2" disabled>
+                                                                                   Itens do Pedido
+                                                                                </Button>
+                                                                            ) : (
+                                                                                <Button 
+                                                                                    variant="info" 
+                                                                                    size="2"
+                                                                                    className="me-2" 
+                                                                                    onClick={() => handleShowItemManagementModal(compra)}
+                                                                                >
+                                                                                    Itens
+                                                                                </Button>
+                                                                            )}                 
+                               
+                                
                                 
                                 <Button 
                                     variant="success" size="sm" className="me-2"
@@ -161,13 +169,24 @@ const Compras = () => {
                                     {compra.status === 1 ? 'Concluída' : 'Finalizar'}
                                 </Button>
 
-                                <Button 
-                                    variant="danger" size="sm"
-                                    onClick={() => handleDelete(compra.id)}
-                                    disabled={compra.status === 1}
-                                >
-                                    Excluir
-                                </Button>
+                                {compra.status === 1 ? (
+                                                                                <Button variant="secondary" size="sm" className="me-2" disabled>
+                                                                                   Itens do Pedido
+                                                                                </Button>
+                                                                            ) : (
+                                                                                <Button 
+                                                                                    variant="danger" 
+                                                                                    size="2"
+                                                                                    className="me-2" 
+                                                                                    onClick={() => handleDelete(compra)}
+                                                                                >
+                                                                                    Excluir
+                                                                                </Button>
+                                                                            )}                 
+                               
+
+
+                                
                             </td>
                         </tr>
                     ))}
