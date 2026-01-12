@@ -112,7 +112,7 @@ const Compras = () => {
 
     return (
         <div className="p-5">
-            <h2>Gestão de Compras (Entrada de Estoque)</h2>
+            <h2><b>Gestão de Compras (Entrada de Estoque)</b></h2>
            
             <Button 
         variant="primary" 

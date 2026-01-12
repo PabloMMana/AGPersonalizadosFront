@@ -65,7 +65,7 @@ const Estoques = () => {
 
   return (
     <div className="p-5">
-      <h2>Estoque</h2>  
+      <h2><b>Estoque</b></h2>  
       {/* Botão Novo Estoque */}
       <Button variant="success" className="mb-3" onClick={() => handleOpenModal(null)}>
         Novo Estoque

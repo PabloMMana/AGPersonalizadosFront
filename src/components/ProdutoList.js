@@ -61,7 +61,7 @@ const ProdutoList = () => {
 
     return (
         <div className="p-4">
-            <h1>Gerenciamento de Produtos</h1>
+            <h1><b>Gerenciamento de Produtos</b></h1>
             <Button 
                 variant="success" 
                 onClick={() => {

@@ -56,7 +56,7 @@ const Fornecedor = () => {
   
   return (
     <div className="p-5" > 
-      <h2>Fornecedores</h2>
+      <h2><b>Fornecedores</b></h2>
       {/* 6. Adiciona o evento onClick para abrir o modal no modo Adição */}
       <Button 
           variant="success" 
