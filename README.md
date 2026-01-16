@@ -1,8 +1,8 @@
 Rodar o projeto de fronend em REACT:
 
 instalar no equipamento:
-Node.js (Versão LTS) e
-VS Code
+Node.js (Versão LTS),
+VS Code e o
 Git
 --------------------------------------------------------------------------------------------------
 Instalar (pasta do projeto no CMD) as Dependências: Este comando lê o arquivo package.json e baixa tudo o que o projeto precisa para rodar.
