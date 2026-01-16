@@ -1,3 +1,26 @@
+Rodar o projeto de fronend em REACT:
+
+instalar no equipamento:
+Node.js (Versão LTS)
+VS Code
+Git
+--------------------------------------------------------------------------------------------------
+Instalar (pasta do projeto no CMD) as Dependências: Este comando lê o arquivo package.json e baixa tudo o que o projeto precisa para rodar.
+
+Bash
+
+npm install
+(Ou yarn install, se você usou Yarn no projeto original).
+
+Iniciar o Servidor de Desenvolvimento: Após a instalação terminar, rode:
+
+Bash
+
+npm run dev
+
+-------------------------------------------------------------------------------------------------------------------- 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
