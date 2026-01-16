@@ -1,7 +1,7 @@
 Rodar o projeto de fronend em REACT:
 
 instalar no equipamento:
-Node.js (Versão LTS)
+Node.js (Versão LTS) e
 VS Code
 Git
 --------------------------------------------------------------------------------------------------
