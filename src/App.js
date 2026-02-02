@@ -12,6 +12,7 @@ import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import Register from './components/Register';
 import Compras from './pages/Compras';
+import Vendas from './pages/Vendas';
 
 
 
@@ -40,7 +41,8 @@ function App() {
           <Route path="estoques" element={<Estoques />} />    
           <Route path="produtos" element={<Produtos />} />            
           <Route path="fornecedor" element={<Fornecedor />} />
-          <Route path="compras" element={<Compras />} />            
+          <Route path="compras" element={<Compras />} />    
+          <Route path="vendas"  element={<Vendas />}/>         
         </Route>
 
         {/* Redireciona a raiz para o login */}

@@ -8,7 +8,7 @@ const Dashboard = () => {
     <Container fluid>
       <div className="background-login"></div>
       <Row>
-        <Col md={1} className="p-30">
+        <Col md={2} className="p-30">
           <SideNav />
         </Col>
         <Col md={10}>

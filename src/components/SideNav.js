@@ -26,6 +26,11 @@ const SideNav = () => {
         <Nav.Link>Compra</Nav.Link>
       </LinkContainer></h1> 
 
+      <h1 className="menu-divisor"><LinkContainer to="/dashboard/vendas">
+        <Nav.Link>Vendas</Nav.Link>
+      </LinkContainer></h1> 
+
+
       <h1 ><LinkContainer to="/login">
         <Nav.Link>Sair</Nav.Link>
       </LinkContainer></h1>
