@@ -107,7 +107,7 @@ setProdutosMap(pMap);
       <td>{venda.precoUnitario}</td>          
       <td>{venda.quantidade}</td>     
       {/* 1. Busca o nome no mapa de produtos usando o ID correto */}
-      <td>{produtosMap[venda.produtoId] || (venda.produtoId === 0 ? produtosMap[1] : "Não encontrado")}</td>             
+      <td>{produtosMap[venda.produtoId] || (produtosMap.nome )}</td>             
       <td>{clientesMap[venda.clienteId] || "Carregando..."}</td>
       {/* 2. Lógica para converter o Status de número para texto */}
       <td>{venda.status === 1 ? "Finalizado" : venda.status}</td>             
