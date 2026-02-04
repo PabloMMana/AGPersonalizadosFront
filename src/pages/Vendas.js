@@ -11,30 +11,42 @@ const Vendas = () => {
   const [produtosMap, setProdutosMap] = useState({}); // Mapa para traduzir produtoId em Nome
   const [showModal, setShowModal] = useState(false);
   const [vendaParaEditar, setVendaParaEditar] = useState(null); // Item que será editado
-
+  const CLIENTE_URL = 'http://localhost:5000/api/clientes ';
+  const [clientesMap, setClientesMap] = useState({});
   useEffect(() => {
     // Carrega os dados dos Vendas E dos Produtos da API
     fetchProdutosAndVendas();
   }, []);
 
+  
   const fetchProdutosAndVendas = async () => {
-    try {
-      // 1. Buscar Produtos (para traduzir IDs)
-      const produtosResponse = await axios.get(PRODUTO_URL);
-      const map = {};
-      produtosResponse.data.forEach(p => {
-        map[p.id] = p.nome;
-      });
-      setProdutosMap(map);
+  try {
+    // Busca Produtos e Clientes simultaneamente
+    const [produtosResponse, clientesResponse, vendasResponse] = await Promise.all([
+      axios.get(PRODUTO_URL),
+      axios.get(CLIENTE_URL),
+      axios.get(API_URL)
+    ]);
 
-      // 2. Buscar Vendas
-      const vendasResponse = await axios.get(API_URL);
-      setEstoques(vendasResponse.data);
-    } catch (error) {
-      console.error('Erro ao buscar dados:', error);
-    }
-  };
+    // Mapeia IDs de Produtos para Nomes
+    const pMap = {};
+produtosResponse.data.forEach(p => { 
+  // Garanta que p.id e p.nome existam exatamente com esses nomes no JSON
+  pMap[p.id] = p.nome; 
+});
+setProdutosMap(pMap);
 
+    // Mapeia IDs de Clientes para Nomes
+    const cMap = {};
+    clientesResponse.data.forEach(c => { cMap[c.id] = c.nome; }); // Assume que o campo no banco é 'nome'
+    setClientesMap(cMap);
+
+    // Atualiza a lista de vendas
+    setEstoques(vendasResponse.data);
+  } catch (error) {
+    console.error('Erro ao buscar dados:', error);
+  }
+};
   const handleOpenModal = (venda = null) => {
     setVendaParaEditar(venda); // Define o item para edição (ou null para novo)
     setShowModal(true);
@@ -91,14 +103,16 @@ const Vendas = () => {
         <tbody>
           {vendas.map(venda => (
             <tr key={venda.id}>
-              <td>{venda.pedidoId}</td>    
-              <td>{venda.precoUnitario}</td>          
-               <td>{venda.quantidade}</td>     
-              <td>{produtosMap[venda.produtoId] || venda.produtoId}</td>              
-              <td>{venda.clienteId}</td>
-              <td>{venda.status}</td>             
-              <td>{venda.dataVenda}</td>    
-            </tr>
+      <td>{venda.pedidoId}</td>    
+      <td>{venda.precoUnitario}</td>          
+      <td>{venda.quantidade}</td>     
+      {/* 1. Busca o nome no mapa de produtos usando o ID correto */}
+      <td>{produtosMap[venda.produtoId] || (venda.produtoId === 0 ? produtosMap[1] : "Não encontrado")}</td>             
+      <td>{clientesMap[venda.clienteId] || "Carregando..."}</td>
+      {/* 2. Lógica para converter o Status de número para texto */}
+      <td>{venda.status === 1 ? "Finalizado" : venda.status}</td>             
+      <td>{new Date(venda.dataVenda).toLocaleString('pt-BR')}</td>    
+    </tr>
           ))}
         </tbody>
       </Table>
