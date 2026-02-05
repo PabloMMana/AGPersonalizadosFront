@@ -91,9 +91,8 @@ setProdutosMap(pMap);
         <thead>
           <tr>
              <th>Pedido</th>
-             <th>Preço Unitário</th>
-            <th>Quantidade</th>
-            <th>Produto</th> 
+             <th>Valor do Pedido</th>
+            <th>Quantidade</th>           
             <th>Cliente</th> 
              <th>Status</th> 
              <th>Data de Venda</th>              
@@ -105,11 +104,8 @@ setProdutosMap(pMap);
             <tr key={venda.id}>
       <td>{venda.pedidoId}</td>    
       <td>{venda.precoUnitario}</td>          
-      <td>{venda.quantidade}</td>     
-      {/* 1. Busca o nome no mapa de produtos usando o ID correto */}
-      <td>{produtosMap[venda.produtoId] || (produtosMap.nome )}</td>             
-      <td>{clientesMap[venda.clienteId] || "Carregando..."}</td>
-      {/* 2. Lógica para converter o Status de número para texto */}
+      <td>{venda.quantidade}</td>                 
+      <td>{clientesMap[venda.clienteId] || "Carregando..."}</td>      
       <td>{venda.status === 1 ? "Finalizado" : venda.status}</td>             
       <td>{new Date(venda.dataVenda).toLocaleString('pt-BR')}</td>    
     </tr>

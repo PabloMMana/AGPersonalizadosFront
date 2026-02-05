@@ -196,6 +196,9 @@ const handleFinalizarPedido = async (pedidoId) => {
                         <th>Cliente</th>
                         <th>Nome do Produto</th>
                         <th>Detalhes</th>
+                        <th>Quantidade</th>
+                        <th>Ações</th>
+
                         
                     </tr>
                 </thead>
@@ -408,14 +411,6 @@ const handleFinalizarPedido = async (pedidoId) => {
                             />
                         </Form.Group>
                         <Form.Group className="mb-3">
-                            <Form.Label>Detalhes</Form.Label>
-                            <Form.Control
-                                type="text"
-                                value={newPedido.detalhes}
-                                onChange={(e) => setNewPedido({ ...newPedido, detalhes: e.target.value })}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
                             <Form.Label>Quantidade</Form.Label>
                             <Form.Control
                                 type="number"
@@ -423,6 +418,15 @@ const handleFinalizarPedido = async (pedidoId) => {
                                 onChange={(e) => setNewPedido({ ...newPedido, quantidade: parseInt(e.target.value) })}
                                 disabled
                             />
+                        <Form.Group className="mb-3">
+                            <Form.Label>Detalhes</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newPedido.detalhes}
+                                onChange={(e) => setNewPedido({ ...newPedido, detalhes: e.target.value })}
+                            />
+                        </Form.Group>
+                        
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             Criar Pedido
