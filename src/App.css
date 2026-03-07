@@ -4,9 +4,10 @@
 
 .menu-divisor {
     /* Define uma borda cinza clara na parte inferior */
-    border-bottom: 5px solid #39c5d8;        
+    border-bottom: 5px solid #39c5d8;            
     padding-bottom: 8px; 
     margin-bottom: 8px; 
+   
 }
 
 .App-logo {
@@ -110,7 +111,7 @@
     width: 100%;
     padding: 10px;
     margin-top: 10px;
-    background-color: #007bff; /* Cor primária do seu projeto */
+    background-color: #3700ffa9; /* Cor primária do seu projeto */
     color: white;
     border: none;
     border-radius: 4px;

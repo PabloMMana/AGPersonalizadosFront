@@ -34,9 +34,36 @@ const Login = () => {
         <Col xs={3} sm={3} md={2} lg={3}>
           <Card className="shadow-lg p-3">
             <Card.Body>
-              <Card.Title className="text-center">
-                <h2>Login - AG Personalizados</h2>
-              </Card.Title>
+              <Card.Title className="text-center mb-4">
+  {/* Parte superior: "Login" em Arial */}
+  <div style={{ 
+    fontFamily: 'Arial, sans-serif', 
+    color: '#003366', // Azul escuro
+    fontSize: '1.3rem',
+    fontWeight: 'bold',
+    textTransform: 'uppercase'
+  }}>
+    Login
+  </div>
+
+  {/* Parte inferior: "AG Personalizados" com a fonte cursiva */}
+  <div style={{ 
+    fontFamily: "'Dancing Script', cursive", // Certifique-se de que esta fonte está importada
+    color: '#fa0505', // Azul escuro
+    fontSize: '3rem',
+    marginTop: '-5px'
+  }}>
+    AG Personalizados
+  </div>
+
+  {/* Linha divisória */}
+  <hr style={{ 
+    borderTop: '2px solid #003366', 
+    width: '60%', 
+    margin: '15px auto 10px auto',
+    opacity: 0.5 
+  }} />
+</Card.Title>
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Email</Form.Label>
