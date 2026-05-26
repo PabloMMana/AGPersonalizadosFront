@@ -53,7 +53,7 @@ const Login = () => {
     fontSize: '3rem',
     marginTop: '-5px'
   }}>
-    AG Personalizados
+    <b>AG </b> Personalizados
   </div>
 
   {/* Linha divisória */}
