@@ -1,5 +1,13 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Ignorar executáveis
+*.exe
+
+# Ignorar pastas de build comuns em projetos JS
+node_modules/
+dist/
+build/
+
 # dependencies
 /node_modules
 /.pnp
